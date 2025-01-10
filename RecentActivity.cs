@@ -1,14 +1,13 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Events;
-using Playnite.SDK.Models;
-using Playnite.SDK.Plugins;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Playnite.SDK;
+using Playnite.SDK.Events;
+using Playnite.SDK.Plugins;
+using RecentActivity.Aggregator;
+using RecentActivity.Data;
 using RecentActivity.UI;
 
 namespace RecentActivity
@@ -20,6 +19,8 @@ namespace RecentActivity
         private RecentActivitySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("7c625c8a-5a23-42db-9b9b-c90657279277");
+        
+        private IReadOnlyCollection<RecentActivityData> _recentActivities;
 
         public RecentActivity(IPlayniteAPI api) : base(api)
         {
@@ -28,7 +29,7 @@ namespace RecentActivity
             {
                 HasSettings = true
             };
-            
+
             // Add sidebar panel item
         }
 
@@ -45,7 +46,7 @@ namespace RecentActivity
                 Type = SiderbarItemType.View,
                 Opened = () =>
                 {
-                    return new MainView();
+                    return new MainView(_recentActivities);
                 }
             };
         }
@@ -78,6 +79,21 @@ namespace RecentActivity
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             // Add code to be executed when Playnite is initialized.
+            Task.Run(async () =>
+            {
+                try
+                {
+                    _recentActivities = await RecentActivityAggregator.GetRecentActivity(
+                        PlayniteApi,
+                        DateTime.Now.AddDays(-14), 
+                        DateTime.Now
+                        );
+
+                }
+                catch (Exception e)
+                {
+                }
+            });
         }
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)

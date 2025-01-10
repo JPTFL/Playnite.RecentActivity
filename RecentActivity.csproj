@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Playnite.SDK, Version=6.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\PlayniteSDK.6.2.0\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
@@ -48,6 +51,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregator\RecentActivityAggregator.cs" />
+    <Compile Include="DataFetcher.cs" />
+    <Compile Include="Data\GameActivity\Activity.cs" />
+    <Compile Include="Data\GameActivity\Session.cs" />
+    <Compile Include="Data\RecentActivityData.cs" />
     <Compile Include="RecentActivity.cs" />
     <Compile Include="RecentActivitySettings.cs" />
     <Compile Include="RecentActivitySettingsView.xaml.cs">
