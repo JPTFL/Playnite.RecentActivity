@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -40,13 +41,10 @@ namespace RecentActivity.Aggregator
                 }
                 if (playtime > 0)
                 {
+                    var game = api.Database.Games.FirstOrDefault(g => g.Id == activity.Id); // Assuming activity has GameId
                     recentActivity.Add(new RecentActivityData
                     {
-                        Game = new Game
-                        {
-                            Id = activity.Id,
-                            Name = activity.Name
-                        },
+                        Game = game,
                         playtime = playtime,
                         lastPlayed = lastPlayed
                     });

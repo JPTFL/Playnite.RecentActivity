@@ -19,3 +19,5 @@ C:\Users\JP\RiderProjects\Playnite.RecentActivity\obj\Debug\UI\MainView.baml
 C:\Users\JP\RiderProjects\Playnite.RecentActivity\obj\Debug\UI\MainView.g.cs
 C:\Users\JP\RiderProjects\Playnite.RecentActivity\bin\Debug\Newtonsoft.Json.dll
 C:\Users\JP\RiderProjects\Playnite.RecentActivity\bin\Debug\Newtonsoft.Json.xml
+C:\Users\JP\RiderProjects\Playnite.RecentActivity\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\JP\RiderProjects\Playnite.RecentActivity\obj\Debug\RecentActivity_MarkupCompile.lref

@@ -15,6 +15,8 @@ namespace RecentActivity
     public class RecentActivity : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        
+        public static IPlayniteAPI Api { get; private set; }
 
         private RecentActivitySettingsViewModel settings { get; set; }
 
@@ -29,6 +31,7 @@ namespace RecentActivity
             {
                 HasSettings = true
             };
+            Api = api;
 
             // Add sidebar panel item
         }

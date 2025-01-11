@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Playnite.SDK.Controls;
 using System.ComponentModel;
-using System.Text;
+using Playnite.SDK;
+using Playnite.SDK.Controls;
+using Playnite.SDK.Models;
 using RecentActivity.Data;
 
 namespace RecentActivity.UI
 {
+
     public partial class MainView : PluginUserControl, INotifyPropertyChanged
     {
-        private string _recentActivity;
+        private static readonly ILogger logger = LogManager.GetLogger();
+        private ObservableCollection<RecentActivityEntry> _recentActivityList;
 
-        public string RecentActivity
+        public ObservableCollection<RecentActivityEntry> RecentActivityList
         {
-            get => _recentActivity;
+            get => _recentActivityList;
             set
             {
-                if (_recentActivity != value)
+                if (_recentActivityList != value)
                 {
-                    _recentActivity = value;
-                    OnPropertyChanged(nameof(RecentActivity));
+                    _recentActivityList = value;
+                    OnPropertyChanged(nameof(RecentActivityList));
                 }
             }
         }
@@ -28,26 +31,16 @@ namespace RecentActivity.UI
         public MainView(IReadOnlyCollection<RecentActivityData> recentActivity)
         {
             InitializeComponent();
-            DataContext = this; 
-            
-            RecentActivity = FormatRecentActivity(recentActivity);
-        }
+            DataContext = this;
 
-        private static string FormatRecentActivity(IReadOnlyCollection<RecentActivityData> recentActivity)
-        {
-            var sb = new StringBuilder();
+            RecentActivityList = new ObservableCollection<RecentActivityEntry>();
             foreach (var activity in recentActivity)
             {
-                sb.AppendLine($"{activity.Game.Name} - {FormatPlaytime(activity.playtime)} - {activity.lastPlayed}");
+                logger.Debug($"Adding JPT: {activity.Game.CoverImage}");
+                RecentActivityList.Add(new RecentActivityEntry { Activity = activity });
             }
-            return sb.ToString();
         }
-        
-        private static string FormatPlaytime(int playtime)
-        {
-            var ts = new TimeSpan(0, 0, playtime);
-            return ts.ToString();
-        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
