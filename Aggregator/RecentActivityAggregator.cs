@@ -27,11 +27,13 @@ namespace RecentActivity.Aggregator
             foreach (var activity in activities)
             {
                 var playtime = 0;
+                var sessionCount = 0;
                 var lastPlayed = DateTime.MinValue;
                 foreach (var session in activity.Items)
                 {
                     if (session.DateSession >= startDate && session.DateSession <= endDate)
                     {
+                        sessionCount++;
                         playtime += session.ElapsedSeconds;
                         if (session.DateSession > lastPlayed)
                         {
@@ -45,15 +47,16 @@ namespace RecentActivity.Aggregator
                     recentActivity.Add(new RecentActivityData
                     {
                         Game = game,
-                        playtime = playtime,
-                        lastPlayed = lastPlayed
+                        Playtime = playtime,
+                        LastPlayed = lastPlayed,
+                        SessionCount = sessionCount
                     });
                 }
             }
             _logger.Info($"Found {recentActivity.Count} recent activities");
             
             // sort by lastPlayed descending
-            recentActivity.Sort((x, y) => y.lastPlayed.CompareTo(x.lastPlayed));
+            recentActivity.Sort((x, y) => y.LastPlayed.CompareTo(x.LastPlayed));
             return recentActivity;
         }
     }

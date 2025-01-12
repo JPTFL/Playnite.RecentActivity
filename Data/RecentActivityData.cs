@@ -6,7 +6,8 @@ namespace RecentActivity.Data
     public class RecentActivityData
     {
         public Game Game;
-        public int playtime;
-        public DateTime lastPlayed;
+        public int Playtime;
+        public DateTime LastPlayed;
+        public int SessionCount;
     }
 }

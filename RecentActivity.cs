@@ -12,7 +12,7 @@ using RecentActivity.UI;
 
 namespace RecentActivity
 {
-    public class RecentActivity : GenericPlugin
+    public class RecentActivity : GenericPlugin, IRecentActivitySetup
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         
@@ -22,7 +22,11 @@ namespace RecentActivity
 
         public override Guid Id { get; } = Guid.Parse("7c625c8a-5a23-42db-9b9b-c90657279277");
         
-        private IReadOnlyCollection<RecentActivityData> _recentActivities;
+        private IRecentActivityReceiver _recentActivityReceiver;
+        
+        private static int daysToLookBack = 14;
+        private DateTime _startDate;
+        private DateTime _endDate;
 
         public RecentActivity(IPlayniteAPI api) : base(api)
         {
@@ -32,6 +36,9 @@ namespace RecentActivity
                 HasSettings = true
             };
             Api = api;
+            
+            _startDate = DateTime.Now.AddDays(-daysToLookBack);
+            _endDate = DateTime.Now;
 
             // Add sidebar panel item
         }
@@ -49,9 +56,43 @@ namespace RecentActivity
                 Type = SiderbarItemType.View,
                 Opened = () =>
                 {
-                    return new MainView(_recentActivities);
+                    var mainView = new MainView(_startDate, _endDate, this);
+                    _recentActivityReceiver = mainView;
+                    return mainView;
                 }
             };
+        }
+        
+        public void RefreshData()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var recentActivities = await RecentActivityAggregator.GetRecentActivity(
+                        PlayniteApi,
+                        _startDate, 
+                        _endDate
+                    );
+                    _recentActivityReceiver?.OnRecentActivityUpdated(recentActivities);
+
+                }
+                catch (Exception e)
+                {
+                }
+            });
+        }
+
+        public void SetStartDate(DateTime startDate)
+        {
+            _startDate = startDate;
+            RefreshData();
+        }
+
+        public void SetEndDate(DateTime endDate)
+        {
+            _endDate = endDate;
+            RefreshData();
         }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
@@ -71,7 +112,7 @@ namespace RecentActivity
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            // Add code to be executed when game is preparing to be started.
+            RefreshData();
         }
 
         public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
@@ -81,22 +122,7 @@ namespace RecentActivity
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            // Add code to be executed when Playnite is initialized.
-            Task.Run(async () =>
-            {
-                try
-                {
-                    _recentActivities = await RecentActivityAggregator.GetRecentActivity(
-                        PlayniteApi,
-                        DateTime.Now.AddDays(-14), 
-                        DateTime.Now
-                        );
-
-                }
-                catch (Exception e)
-                {
-                }
-            });
+            RefreshData();
         }
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)

@@ -2,5 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOC_RecentActivity_SidebarTitle">Recent Activity</sys:String>
-    <sys:String x:Key="LOC_RecentActivity_TotalPlaytime">Total playtime in the time span: {0} hours</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_TotalPlaytime">Total playtime in the time span: {0}</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_StartDate">In the time from </sys:String>
+    <sys:String x:Key="LOC_RecentActivity_EndDate"> to </sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Hours">{0} hours</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Minutes">{0} minutes</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SessionCount">Sessions: {0}</sys:String>
 </ResourceDictionary>

@@ -1,6 +1,9 @@
 using System;
 using System.ComponentModel;
+using System.Globalization;
+using Playnite.SDK;
 using Playnite.SDK.Models;
+using RecentActivity.Converters;
 using RecentActivity.Data;
 
 namespace RecentActivity.UI
@@ -24,16 +27,11 @@ namespace RecentActivity.UI
             }
         }
 
-        public string FormattedPlaytime => FormatPlaytime(Activity.playtime);
-        public string FormattedLastPlayed => Activity.lastPlayed.ToString("g");
+        public string FormattedPlaytime => TextConverter.SecondsToHoursText(Activity.Playtime);
+        public string FormattedLastPlayed => Activity.LastPlayed.ToString("g");
         public Game Game => Activity.Game;
         public string CoverImage => Activity.Game.CoverImage;
-
-        private static string FormatPlaytime(int playtime)
-        {
-            var ts = new TimeSpan(0, 0, playtime);
-            return $"Playtime: {ts:hh\\:mm}";
-        }
+        public string FormattedSessionCount => string.Format(ResourceProvider.GetString("LOC_RecentActivity_SessionCount"), Activity.SessionCount);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
