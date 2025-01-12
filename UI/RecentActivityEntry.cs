@@ -32,7 +32,7 @@ namespace RecentActivity.UI
         private static string FormatPlaytime(int playtime)
         {
             var ts = new TimeSpan(0, 0, playtime);
-            return $"Playtime: {ts:hh\\:mm\\:ss}";
+            return $"Playtime: {ts:hh\\:mm}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

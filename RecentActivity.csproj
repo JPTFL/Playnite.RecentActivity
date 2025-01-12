@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Aggregator\RecentActivityAggregator.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="Converters\UriToBitmapImageConverter.cs" />
     <Compile Include="DataFetcher.cs" />
     <Compile Include="Data\GameActivity\Activity.cs" />

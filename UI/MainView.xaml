@@ -9,8 +9,33 @@
     <PluginUserControl.Resources>
         <converters:UriToBitmapImageConverter x:Key="UriToBitmapImageConverter" />
     </PluginUserControl.Resources>
-    <Grid>
-        <ListBox ItemsSource="{Binding RecentActivityList}" Margin="0,0,0,0" Background="Transparent">
+    
+    
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Recent Activity Text -->
+            <RowDefinition Height="Auto" /> <!-- Total Playtime Text -->
+            <RowDefinition Height="*" /> <!-- ListBox (Fill remaining space) -->
+        </Grid.RowDefinitions>
+        
+        
+        <TextBlock Text="Recent Activity"
+                   FontSize="24"
+                   Foreground="White"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"
+                   Grid.Row="0" />
+
+        <!-- Total Playtime Header -->
+        <TextBlock Text="{Binding TotalPlaytimeText}"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   Margin="0,0,0,10"
+                   Grid.Row="1" />
+        
+        <ListBox ItemsSource="{Binding RecentActivityList}" Margin="0,0,0,0" Background="Transparent" Grid.Row="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" Margin="5">
