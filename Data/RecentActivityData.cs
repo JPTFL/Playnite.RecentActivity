@@ -9,5 +9,7 @@ namespace RecentActivity.Data
         public int Playtime;
         public DateTime LastPlayed;
         public int SessionCount;
+        public double RecentPlayedRatio;
+        public double RelativePlaytimeRatio;
     }
 }

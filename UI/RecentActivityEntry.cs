@@ -32,6 +32,8 @@ namespace RecentActivity.UI
         public Game Game => Activity.Game;
         public string CoverImage => Activity.Game.CoverImage;
         public string FormattedSessionCount => string.Format(ResourceProvider.GetString("LOC_RecentActivity_SessionCount"), Activity.SessionCount);
+        public string RecentPlayedRatio => string.Format(ResourceProvider.GetString("LOC_RecentActivity_RecentPlayedRatio"), Activity.RecentPlayedRatio.ToString("P", CultureInfo.InvariantCulture));
+        public string RelativePlaytimeRatio => string.Format(ResourceProvider.GetString("LOC_RecentActivity_RelativePlaytimeRatio"), Activity.RelativePlaytimeRatio.ToString("P", CultureInfo.InvariantCulture));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
