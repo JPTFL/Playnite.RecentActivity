@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -29,6 +30,8 @@ namespace RecentActivity
         private DateTime _startDate;
         private DateTime _endDate;
         private SortOption _sorting;
+        
+        private CancellationTokenSource _cancellationTokenSource;
 
         public RecentActivity(IPlayniteAPI api) : base(api)
         {
@@ -66,6 +69,11 @@ namespace RecentActivity
         
         public void RefreshData()
         {
+            // Cancel any previously running task
+            _cancellationTokenSource?.Cancel();
+            // Create a new CancellationTokenSource for the current task
+            _cancellationTokenSource = new CancellationTokenSource();
+            
             Task.Run(async () =>
             {
                 try
@@ -73,7 +81,8 @@ namespace RecentActivity
                     var recentActivities = await RecentActivityAggregator.GetRecentActivity(
                         PlayniteApi,
                         _startDate, 
-                        _endDate
+                        _endDate,
+                        _cancellationTokenSource.Token
                     );
                     var activities = SortRecentActivities(recentActivities, _sorting);
                     _recentActivityReceiver?.OnRecentActivityUpdated(activities);
