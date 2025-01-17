@@ -7,5 +7,6 @@ namespace RecentActivity.UI
         void RefreshData();
         void SetStartDate(DateTime startDate);
         void SetEndDate(DateTime endDate);
+        void SetSorting(SortOption sorting);
     }
 }

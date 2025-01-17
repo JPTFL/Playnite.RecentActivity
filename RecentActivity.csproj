@@ -72,6 +72,7 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\RecentActivityEntry.cs" />
+    <Compile Include="UI\SortOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

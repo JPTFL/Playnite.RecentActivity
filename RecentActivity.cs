@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -27,6 +28,7 @@ namespace RecentActivity
         private const int DefaultDaysToLookBack = 14;
         private DateTime _startDate;
         private DateTime _endDate;
+        private SortOption _sorting;
 
         public RecentActivity(IPlayniteAPI api) : base(api)
         {
@@ -39,8 +41,7 @@ namespace RecentActivity
             
             _startDate = DateTime.Now.AddDays(-DefaultDaysToLookBack);
             _endDate = DateTime.Now;
-
-            // Add sidebar panel item
+            _sorting = SortOption.LastPlayed;
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -56,7 +57,7 @@ namespace RecentActivity
                 Type = SiderbarItemType.View,
                 Opened = () =>
                 {
-                    var mainView = new MainView(_startDate, _endDate, this);
+                    var mainView = new MainView(_startDate, _endDate,  _sorting, this);
                     _recentActivityReceiver = mainView;
                     return mainView;
                 }
@@ -74,13 +75,27 @@ namespace RecentActivity
                         _startDate, 
                         _endDate
                     );
-                    _recentActivityReceiver?.OnRecentActivityUpdated(recentActivities);
+                    var activities = SortRecentActivities(recentActivities, _sorting);
+                    _recentActivityReceiver?.OnRecentActivityUpdated(activities);
 
                 }
                 catch (Exception e)
                 {
                 }
             });
+        }
+
+        private IReadOnlyCollection<RecentActivityData> SortRecentActivities(IReadOnlyCollection<RecentActivityData> activities, SortOption sorting)
+        {
+            switch (_sorting)
+            {
+                case SortOption.GameNameAscending: return activities.OrderBy(a => a.Game.Name).ToList();
+                case SortOption.GameNameDescending: return activities.OrderByDescending(a => a.Game.Name).ToList();
+                case SortOption.Playtime: return activities.OrderByDescending(a => a.Playtime).ToList();
+                case SortOption.LastPlayed: return activities.OrderByDescending(a => a.LastPlayed).ToList();
+                case SortOption.Sessions: return activities.OrderByDescending(a => a.SessionCount).ToList();
+                default: return activities;
+            }
         }
 
         public void SetStartDate(DateTime startDate)
@@ -92,6 +107,12 @@ namespace RecentActivity
         public void SetEndDate(DateTime endDate)
         {
             _endDate = endDate;
+            RefreshData();
+        }
+
+        public void SetSorting(SortOption sorting)
+        {
+            _sorting = sorting;
             RefreshData();
         }
 

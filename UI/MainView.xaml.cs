@@ -16,12 +16,12 @@ namespace RecentActivity.UI
 {
     public partial class MainView : PluginUserControl, INotifyPropertyChanged, IRecentActivityReceiver
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
         private ObservableCollection<RecentActivityEntry> _recentActivityList;
         private DateTime _startDate;
         private DateTime _endDate;
+        private SortOption _selectedSortOption;
         private string _totalPlaytimeText;
-        private IRecentActivitySetup _recentActivitySetup;
+        private readonly IRecentActivitySetup _recentActivitySetup;
 
         public ObservableCollection<RecentActivityEntry> RecentActivityList
         {
@@ -48,6 +48,25 @@ namespace RecentActivity.UI
         public RelayCommand LastMonthCommand { get; set; }
         public RelayCommand LastTwoWeeksCommand { get; set; }
         public RelayCommand LastWeekCommand { get; set; }
+        
+        public ObservableCollection<SortOption> SortOptions { get; set; } = new ObservableCollection<SortOption>
+        {
+            SortOption.LastPlayed, SortOption.Playtime, SortOption.Sessions, SortOption.GameNameAscending, SortOption.GameNameDescending
+        };
+        
+        public SortOption SelectedSortOption
+        {
+            get => _selectedSortOption;
+            set
+            {
+                if (_selectedSortOption != value)
+                {
+                    _selectedSortOption = value;
+                    _recentActivitySetup.SetSorting(value);
+                    OnPropertyChanged(nameof(SelectedSortOption));
+                }
+            }
+        }
 
         public string TotalPlaytimeText
         {
@@ -93,13 +112,15 @@ namespace RecentActivity.UI
         public MainView(
             DateTime startDate,
             DateTime endDate,
+            SortOption sorting,
             IRecentActivitySetup recentActivitySetup
         )
         {
             InitializeComponent();
             DataContext = this;
             _recentActivitySetup = recentActivitySetup;
-
+            
+            SelectedSortOption = sorting;
             StartDate = startDate;
             EndDate = endDate;
 
