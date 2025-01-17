@@ -30,9 +30,15 @@
             
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding StartDateText}" Foreground="White" Margin="0,0,5,0" FontSize="16" />
-                <DatePicker x:Name="StartDatePicker" SelectedDate="{Binding StartDate}" />
+                <DatePicker SelectedDate="{Binding StartDate}" />
                 <TextBlock Text="{Binding EndDateText}" Foreground="White" Margin="10,0,5,0" FontSize="16" />
-                <DatePicker x:Name="EndDatePicker" SelectedDate="{Binding EndDate}" />
+                <DatePicker SelectedDate="{Binding EndDate}" />
+                
+                <!-- space followde by buttons, that trigger: last week, last two weeks, last month, last year, use binding -->
+                <Button Content="{Binding LastYearText}" Command="{Binding LastYearCommand}" Margin="10,0,0,0" />
+                <Button Content="{Binding LastMonthText}" Command="{Binding LastMonthCommand}" Margin="10,0,0,0" />
+                <Button Content="{Binding LastTwoWeeksText}" Command="{Binding LastTwoWeeksCommand}" Margin="10,0,0,0" />
+                <Button Content="{Binding LastWeekText}" Command="{Binding LastWeekCommand}" Margin="10,0,0,0" />
             </StackPanel>
             
             

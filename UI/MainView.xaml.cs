@@ -34,6 +34,16 @@ namespace RecentActivity.UI
 
         public string StartDateText { get; set; }
         public string EndDateText { get; set; }
+        
+        public string LastYearText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastYear");
+        public string LastMonthText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastMonth");
+        public string LastTwoWeeksText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastTwoWeeks");
+        public string LastWeekText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastWeek");
+        
+        public RelayCommand LastYearCommand { get; set; }
+        public RelayCommand LastMonthCommand { get; set; }
+        public RelayCommand LastTwoWeeksCommand { get; set; }
+        public RelayCommand LastWeekCommand { get; set; }
 
         public string TotalPlaytimeText
         {
@@ -90,6 +100,19 @@ namespace RecentActivity.UI
             
             StartDateText = ResourceProvider.GetString("LOC_RecentActivity_StartDate");
             EndDateText = ResourceProvider.GetString("LOC_RecentActivity_EndDate");
+            
+            // command implementations
+            LastYearCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddYears(-1), DateTime.Now));
+            LastMonthCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddMonths(-1), DateTime.Now));
+            LastTwoWeeksCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-14), DateTime.Now));
+            LastWeekCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-7), DateTime.Now));
+
+        }
+
+        private void SetDateRange(DateTime start, DateTime end)
+        {
+            StartDate = start;
+            EndDate = end;
         }
 
         private int CalculateTotalPlaytime(IReadOnlyCollection<RecentActivityData> recentActivity)

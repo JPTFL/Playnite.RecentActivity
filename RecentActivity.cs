@@ -23,8 +23,8 @@ namespace RecentActivity
         public override Guid Id { get; } = Guid.Parse("7c625c8a-5a23-42db-9b9b-c90657279277");
         
         private IRecentActivityReceiver _recentActivityReceiver;
-        
-        private static int daysToLookBack = 14;
+
+        private const int DefaultDaysToLookBack = 14;
         private DateTime _startDate;
         private DateTime _endDate;
 
@@ -37,7 +37,7 @@ namespace RecentActivity
             };
             Api = api;
             
-            _startDate = DateTime.Now.AddDays(-daysToLookBack);
+            _startDate = DateTime.Now.AddDays(-DefaultDaysToLookBack);
             _endDate = DateTime.Now;
 
             // Add sidebar panel item

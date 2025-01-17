@@ -8,4 +8,8 @@
     <sys:String x:Key="LOC_RecentActivity_Hours">{0} hours</sys:String>
     <sys:String x:Key="LOC_RecentActivity_Minutes">{0} minutes</sys:String>
     <sys:String x:Key="LOC_RecentActivity_SessionCount">Sessions: {0}</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastYear">Last year</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastMonth">Last month</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastTwoWeeks">Last two weeks</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastWeek">Last week</sys:String>
 </ResourceDictionary>
