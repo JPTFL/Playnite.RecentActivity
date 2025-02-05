@@ -140,9 +140,9 @@ namespace RecentActivity.UI
             EndDate = end;
         }
 
-        private int CalculateTotalPlaytime(IReadOnlyCollection<RecentActivityData> recentActivity)
+        private ulong CalculateTotalPlaytime(IReadOnlyCollection<RecentActivityData> recentActivity)
         {
-            var totalPlaytime = 0;
+            ulong totalPlaytime = 0;
             foreach (var activity in recentActivity)
             {
                 totalPlaytime += activity.Playtime;

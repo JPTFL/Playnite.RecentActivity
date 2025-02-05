@@ -68,7 +68,9 @@
                             <Grid.ColumnDefinitions>
                                 <!-- Define two columns: one for the image and the other for text -->
                                 <ColumnDefinition Width="75" /> <!-- Fixed width for the image -->
+                                <ColumnDefinition Width="800" /> <!-- Fixed width for the image -->
                                 <ColumnDefinition Width="*" />  <!-- Remaining space for text -->
+                                <ColumnDefinition Width="60" />  <!-- Remaining space for text -->
                             </Grid.ColumnDefinitions>
 
                             <!-- Cover Image in the first column -->
@@ -84,7 +86,7 @@
                                            FontWeight="Bold" 
                                            FontSize="16" 
                                            Margin="0,0,0,5" />
-                                <TextBlock Text="{Binding FormattedPlaytime}" 
+                                <TextBlock Text="{Binding PlaytimeStatistics}" 
                                            FontSize="14" 
                                            Margin="0,0,0,2" />
                                 <TextBlock Text="{Binding FormattedLastPlayed}" 
@@ -92,11 +94,23 @@
                                 <TextBlock Text="{Binding FormattedSessionCount}" 
                                            FontSize="14"
                                            Margin="0,0,0,5" />
-                                <TextBlock Text="{Binding RecentPlayedRatio}" 
-                                           FontSize="14" />
-                                <TextBlock Text="{Binding RelativePlaytimeRatio}" 
-                                           FontSize="14" />
                             </StackPanel>
+                            <!-- show RelativePlaytimeRatio as bigger text on right end of the grid -->
+                            
+                            <Rectangle
+                                Grid.Column="2"
+                                Fill="{DynamicResource GlyphBrush}" 
+                                Height="50"
+                                Width="{Binding RelativePlaytimeBarWidth}"
+                                HorizontalAlignment="Left" />
+                            
+                            <TextBlock
+                                Grid.Column="3"
+                                Text="{Binding RelativePlaytimeRatio}" 
+                                FontSize="16" 
+                                FontWeight="Bold"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right" />
                         </Grid>
 
                         <!-- Separator between the items -->

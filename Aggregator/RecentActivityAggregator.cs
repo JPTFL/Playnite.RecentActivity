@@ -28,15 +28,15 @@ namespace RecentActivity.Aggregator
             foreach (var activity in activities)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                var playtime = 0;
-                var sessionCount = 0;
+                ulong playtime = 0;
+                ulong sessionCount = 0;
                 var lastPlayed = DateTime.MinValue;
                 foreach (var session in activity.Items)
                 {
                     if (session.DateSession >= startDate && session.DateSession <= endDate)
                     {
                         sessionCount++;
-                        playtime += session.ElapsedSeconds;
+                        playtime += (ulong)session.ElapsedSeconds;
                         if (session.DateSession > lastPlayed)
                         {
                             lastPlayed = session.DateSession;

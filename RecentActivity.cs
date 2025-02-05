@@ -54,7 +54,7 @@ namespace RecentActivity
                 Title = ResourceProvider.GetString("LOC_RecentActivity_SidebarTitle"),
                 Icon = new TextBlock
                 {
-                    Text = char.ConvertFromUtf32(0xeffe),
+                    Text = char.ConvertFromUtf32(0xeff0),
                     FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
                 },
                 Type = SiderbarItemType.View,
