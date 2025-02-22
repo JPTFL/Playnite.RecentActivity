@@ -38,7 +38,7 @@ namespace RecentActivity
             settings = new RecentActivitySettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
             Api = api;
             
