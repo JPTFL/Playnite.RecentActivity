@@ -18,6 +18,6 @@ Tags: ['Recent', 'Activity', 'Statistics']
 Links:
   GitHub: https://github.com/JonasPTFL/Playnite.RecentActivity
 Screenshots:
-  - Thumbnail: 
-    Image: 
-IconUrl: 
+  - Thumbnail: https://github.com/JonasPTFL/Playnite.RecentActivity/raw/main/demo/Screenshot01_thumb.png
+    Image: https://github.com/JonasPTFL/Playnite.RecentActivity/blob/main/demo/Screenshot01.png
+IconUrl: https://github.com/JonasPTFL/Playnite.RecentActivity/raw/main/icon.png
