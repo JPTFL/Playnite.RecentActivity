@@ -14,3 +14,11 @@ from the [YearInReview](https://github.com/SparrowBrain/Playnite.YearInReview) e
 [SparrowBrain](https://github.com/SparrowBrain).
 
 Thank you very much for the great work!
+
+# Note
+This extension was originally intended as a proof of concept for personal use only.
+I am new to Playnite development and just wanted to see if I could get this to work.
+Therefore the code is not very optimized and might be a bit messy. 
+
+I just tried to have it work for me with minimal effort :)
+Im open to any contributions or suggestions to improve this extension.
