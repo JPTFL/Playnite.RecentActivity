@@ -1,5 +1,13 @@
 AddonId: JonasPTFL_RecentActivity
 Packages:
+  - Version: 1.0.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-02-23
+    PackageUrl: https://github.com/JonasPTFL/Playnite.RecentActivity/releases/download/v1.0.1/JonasPTFL_RecentActivity_1_0_1.pext
+    Changelog:
+      - fixes installation problems
+      - improve ui layout for smaller windows
+      - adds manual refresh button
   - Version: 1.0.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-02-22
