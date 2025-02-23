@@ -5,29 +5,41 @@ using System.Threading;
 using System.Threading.Tasks;
 using Playnite.SDK;
 using RecentActivity.Data;
+using RecentActivity.Data.GameActivity;
 
 namespace RecentActivity.Aggregator
 {
-    public static class RecentActivityAggregator
+    public class RecentActivityAggregator
     {
-        public static async Task<IReadOnlyCollection<RecentActivityData>> GetRecentActivity(
+        private readonly GameActivityDataFetcher _dataFetcher;
+        private readonly IPlayniteAPI _api;
+        private IReadOnlyCollection<Activity> _activities;
+
+        public RecentActivityAggregator(IPlayniteAPI api)
+        {
+            _dataFetcher = new GameActivityDataFetcher(api.Paths.ExtensionsDataPath);
+            _api = api;
+        }
+        
+        public async Task LoadActivityData()
+        {
+            _activities = await _dataFetcher.GetActivityForGames(_api.Database.Games);
+        }
+        
+        public IReadOnlyCollection<RecentActivityData> GetRecentActivity(
             IPlayniteAPI api,
             DateTime startDate,
-            DateTime endDate,
-            CancellationToken cancellationToken
+            DateTime endDate
         )
         {
-            var dataFetcher = new GameActivityDataFetcher(api.Paths.ExtensionsDataPath);
-            var activities = await dataFetcher.GetActivityForGames(api.Database.Games);
             var recentActivity = new List<RecentActivityData>();
-            var activitiesPlaytimeSum = activities.Sum(a => a.Items.Sum(s => s.ElapsedSeconds));
+            var activitiesPlaytimeSum = _activities.Sum(a => a.Items.Sum(s => s.ElapsedSeconds));
 
             // grouped by game (Activity.Guid), filter all sessions (Activity.Items) that are within the date range (Session.DateSession)
             // is within the date range startDate <= Session.DateSession <= endDate and sum the ElapsedSeconds of all sessions as playtime
             // using Where, SelectMany, and Sum
-            foreach (var activity in activities)
+            foreach (var activity in _activities)
             {
-                cancellationToken.ThrowIfCancellationRequested();
                 ulong playtime = 0;
                 ulong sessionCount = 0;
                 var lastPlayed = DateTime.MinValue;

@@ -20,22 +20,22 @@ namespace RecentActivity
         
         public static IPlayniteAPI Api { get; private set; }
 
-        private RecentActivitySettingsViewModel settings { get; set; }
-
+        private RecentActivitySettingsViewModel Settings { get; set; }
+        
         public override Guid Id { get; } = Guid.Parse("7c625c8a-5a23-42db-9b9b-c90657279277");
         
         private IRecentActivityReceiver _recentActivityReceiver;
+        private readonly RecentActivityAggregator _recentActivityAggregator;
+        private readonly SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
 
         private const int DefaultDaysToLookBack = 14;
         private DateTime _startDate;
         private DateTime _endDate;
         private SortOption _sorting;
-        
-        private CancellationTokenSource _cancellationTokenSource;
 
         public RecentActivity(IPlayniteAPI api) : base(api)
         {
-            settings = new RecentActivitySettingsViewModel(this);
+            Settings = new RecentActivitySettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = false
@@ -45,6 +45,7 @@ namespace RecentActivity
             _startDate = DateTime.Now.AddDays(-DefaultDaysToLookBack);
             _endDate = DateTime.Now;
             _sorting = SortOption.LastPlayed;
+            _recentActivityAggregator = new RecentActivityAggregator(Api);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -60,36 +61,46 @@ namespace RecentActivity
                 Type = SiderbarItemType.View,
                 Opened = () =>
                 {
-                    var mainView = new MainView(_startDate, _endDate,  _sorting, this);
+                    var mainView = new MainView(_startDate, _endDate,  _sorting, this, Api);
                     _recentActivityReceiver = mainView;
+                    RefreshData();
                     return mainView;
                 }
             };
         }
         
-        public void RefreshData()
+        public void RefreshData(bool refreshGamesFromApi = false)
         {
-            // Cancel any previously running task
-            _cancellationTokenSource?.Cancel();
-            // Create a new CancellationTokenSource for the current task
-            _cancellationTokenSource = new CancellationTokenSource();
-            
+            // only allow one refresh at a time and cancel if another refresh is already in progress
+            if (!_refreshLock.Wait(0))
+            {
+                return;
+            }
+
             Task.Run(async () =>
             {
                 try
                 {
-                    var recentActivities = await RecentActivityAggregator.GetRecentActivity(
-                        PlayniteApi,
-                        _startDate, 
-                        _endDate,
-                        _cancellationTokenSource.Token
-                    );
-                    var activities = SortRecentActivities(recentActivities, _sorting);
-                    _recentActivityReceiver?.OnRecentActivityUpdated(activities);
+                    if (refreshGamesFromApi)
+                    {
+                        await _recentActivityAggregator.LoadActivityData();
+                    }
 
+                    if (_recentActivityReceiver != null)
+                    {
+                        var recentActivities = _recentActivityAggregator.GetRecentActivity(
+                            PlayniteApi,
+                            _startDate, 
+                            _endDate
+                        );
+                        var activities = SortRecentActivities(recentActivities, _sorting);
+                        _recentActivityReceiver.OnRecentActivityUpdated(activities);
+                    }
                 }
-                catch (Exception e)
+                finally
                 {
+                    // Release refresh lock
+                    _refreshLock.Release();
                 }
             });
         }
@@ -142,7 +153,6 @@ namespace RecentActivity
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            RefreshData();
         }
 
         public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
@@ -152,7 +162,7 @@ namespace RecentActivity
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            RefreshData();
+            RefreshData(true);
         }
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
@@ -167,7 +177,7 @@ namespace RecentActivity
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)

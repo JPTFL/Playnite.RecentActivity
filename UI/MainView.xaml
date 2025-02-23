@@ -28,7 +28,7 @@
                        FontWeight="Bold"
                        Margin="0,0,0,10" />
             
-            <StackPanel Orientation="Horizontal">
+            <WrapPanel Orientation="Horizontal" >
                 <TextBlock Text="{Binding StartDateText}" Foreground="White" Margin="0,0,5,0" FontSize="16" />
                 <DatePicker SelectedDate="{Binding StartDate}" />
                 <TextBlock Text="{Binding EndDateText}" Foreground="White" Margin="10,0,5,0" FontSize="16" />
@@ -42,7 +42,10 @@
                 
                 <!-- dropdown to select sorting -->
                 <ComboBox ItemsSource="{Binding SortOptions}" SelectedItem="{Binding SelectedSortOption}" Margin="10,0,0,0" />
-            </StackPanel>
+                
+                <!-- button to refresh data -->
+                <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="10,0,0,0" />
+            </WrapPanel>
             
             
 
@@ -62,61 +65,66 @@
             PreviewMouseWheel="ListBox_PreviewMouseWheel">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical" Margin="5">
-                        <!-- Use a Grid to structure the layout with two columns -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <!-- Define two columns: one for the image and the other for text -->
-                                <ColumnDefinition Width="75" /> <!-- Fixed width for the image -->
-                                <ColumnDefinition Width="800" /> <!-- Fixed width for the image -->
-                                <ColumnDefinition Width="*" />  <!-- Remaining space for text -->
-                                <ColumnDefinition Width="60" />  <!-- Remaining space for text -->
-                            </Grid.ColumnDefinitions>
+                    <Button
+                        Command="{Binding OpenGameDetail}"
+                        Background="Transparent"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                            <!-- Use a Grid to structure the layout with two columns -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!-- Define two columns: one for the image and the other for text -->
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" /> 
+                                    <ColumnDefinition Width="60" />
+                                </Grid.ColumnDefinitions>
 
-                            <!-- Cover Image in the first column -->
-                            <Image Grid.Column="0" Width="75" Source="{Binding CoverImage,
-                                                      Converter={StaticResource UriToBitmapImageConverter},
-                                                      ConverterParameter=75,
-                                                      Mode=OneWay}" 
-                                   VerticalAlignment="Top" />
+                                <!-- Cover Image in the first column -->
+                                <Image Grid.Column="0" Width="75" Source="{Binding CoverImage,
+                                                          Converter={StaticResource UriToBitmapImageConverter},
+                                                          ConverterParameter=75,
+                                                          Mode=OneWay}" 
+                                       VerticalAlignment="Top" />
 
-                            <!-- Text content in the second column -->
-                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
-                                <TextBlock Text="{Binding Game.Name}" 
-                                           FontWeight="Bold" 
-                                           FontSize="16" 
-                                           Margin="0,0,0,5" />
-                                <TextBlock Text="{Binding PlaytimeStatistics}" 
-                                           FontSize="14" 
-                                           Margin="0,0,0,2" />
-                                <TextBlock Text="{Binding FormattedLastPlayed}" 
-                                           FontSize="14" />
-                                <TextBlock Text="{Binding FormattedSessionCount}" 
-                                           FontSize="14"
-                                           Margin="0,0,0,5" />
-                            </StackPanel>
-                            <!-- show RelativePlaytimeRatio as bigger text on right end of the grid -->
-                            
-                            <Rectangle
-                                Grid.Column="2"
-                                Fill="{DynamicResource GlyphBrush}" 
-                                Height="50"
-                                Width="{Binding RelativePlaytimeBarWidth}"
-                                HorizontalAlignment="Left" />
-                            
-                            <TextBlock
-                                Grid.Column="3"
-                                Text="{Binding RelativePlaytimeRatio}" 
-                                FontSize="16" 
-                                FontWeight="Bold"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right" />
-                        </Grid>
+                                <!-- Text content in the second column -->
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+                                    <TextBlock Text="{Binding Game.Name}" 
+                                               FontWeight="Bold" 
+                                               FontSize="16" 
+                                               Margin="0,0,0,5" />
+                                    <TextBlock Text="{Binding PlaytimeStatistics}" 
+                                               FontSize="14" 
+                                               Margin="0,0,0,2" />
+                                    <TextBlock Text="{Binding FormattedLastPlayed}" 
+                                               FontSize="14" />
+                                    <TextBlock Text="{Binding FormattedSessionCount}" 
+                                               FontSize="14"
+                                               Margin="0,0,0,5" />
+                                </StackPanel>
+                                <!-- show RelativePlaytimeRatio as bigger text on right end of the grid -->
+                                
+                                <Rectangle
+                                    Grid.Column="2"
+                                    Fill="{DynamicResource GlyphBrush}" 
+                                    Height="50"
+                                    Width="{Binding RelativePlaytimeBarWidth}"
+                                    HorizontalAlignment="Left" />
+                                
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Text="{Binding RelativePlaytimeRatio}" 
+                                    FontSize="16" 
+                                    FontWeight="Bold"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right" />
+                            </Grid>
 
-                        <!-- Separator between the items -->
-                        <Separator Margin="0,10,0,0" />
-                    </StackPanel>
-
+                            <!-- Separator between the items -->
+                            <Separator Margin="0,10,0,0" />
+                        </StackPanel>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>

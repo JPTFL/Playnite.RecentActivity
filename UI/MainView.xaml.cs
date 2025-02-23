@@ -22,6 +22,7 @@ namespace RecentActivity.UI
         private SortOption _selectedSortOption;
         private string _totalPlaytimeText;
         private readonly IRecentActivitySetup _recentActivitySetup;
+        private readonly IPlayniteAPI _api;
 
         public ObservableCollection<RecentActivityEntry> RecentActivityList
         {
@@ -48,6 +49,7 @@ namespace RecentActivity.UI
         public RelayCommand LastMonthCommand { get; set; }
         public RelayCommand LastTwoWeeksCommand { get; set; }
         public RelayCommand LastWeekCommand { get; set; }
+        public RelayCommand RefreshCommand { get; set; }
         
         public ObservableCollection<SortOption> SortOptions { get; set; } = new ObservableCollection<SortOption>
         {
@@ -113,12 +115,14 @@ namespace RecentActivity.UI
             DateTime startDate,
             DateTime endDate,
             SortOption sorting,
-            IRecentActivitySetup recentActivitySetup
+            IRecentActivitySetup recentActivitySetup,
+            IPlayniteAPI api
         )
         {
             InitializeComponent();
             DataContext = this;
             _recentActivitySetup = recentActivitySetup;
+            _api = api;
             
             SelectedSortOption = sorting;
             StartDate = startDate;
@@ -132,6 +136,7 @@ namespace RecentActivity.UI
             LastMonthCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddMonths(-1), DateTime.Now));
             LastTwoWeeksCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-14), DateTime.Now));
             LastWeekCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-7), DateTime.Now));
+            RefreshCommand = new RelayCommand(() => _recentActivitySetup.RefreshData(true) );
         }
 
         private void SetDateRange(DateTime start, DateTime end)
@@ -164,7 +169,7 @@ namespace RecentActivity.UI
             RecentActivityList = new ObservableCollection<RecentActivityEntry>();
             foreach (var activity in recentActivity)
             {
-                RecentActivityList.Add(new RecentActivityEntry { Activity = activity });
+                RecentActivityList.Add(new RecentActivityEntry { Activity = activity, Api = _api });
             }
 
             var totalPlaytimeTextTemplate = ResourceProvider.GetString("LOC_RecentActivity_TotalPlaytime");

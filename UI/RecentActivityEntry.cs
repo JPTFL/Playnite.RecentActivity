@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Input;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using RecentActivity.Converters;
@@ -9,15 +10,16 @@ namespace RecentActivity.UI
 {
     public class RecentActivityEntry : INotifyPropertyChanged
     {
-        private RecentActivityData activity;
+        private RecentActivityData _activity;
+        public IPlayniteAPI Api;
         public RecentActivityData Activity
         {
-            get => activity;
+            get => _activity;
             set
             {
-                if (activity != value)
+                if (_activity != value)
                 {
-                    activity = value;
+                    _activity = value;
                     OnPropertyChanged(nameof(Activity));
                     OnPropertyChanged(nameof(PlaytimeStatistics));
                     OnPropertyChanged(nameof(FormattedLastPlayed));
@@ -39,6 +41,14 @@ namespace RecentActivity.UI
         public string FormattedLastPlayed => string.Format(ResourceProvider.GetString("LOC_RecentActivity_LastPlayed"), Activity.LastPlayed.ToString("g"));
         public Game Game => Activity.Game;
         public string CoverImage => Activity.Game.CoverImage;
+        
+        public ICommand OpenGameDetail =>
+            new RelayCommand(() =>
+            {
+                Api.MainView.SelectGame(Game.Id);
+                Api.MainView.SwitchToLibraryView();
+            });
+        
         public string FormattedSessionCount => string.Format(ResourceProvider.GetString("LOC_RecentActivity_SessionCount"), Activity.SessionCount);
 
         public string RelativePlaytimeRatio =>
