@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_RecentActivity_SidebarTitle">Activité récente</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_TotalPlaytime">Durée totale des sessions sur la période : {0}</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_StartDate">Temps du </sys:String>
+    <sys:String x:Key="LOC_RecentActivity_EndDate"> à </sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Hours">{0} heures</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Minutes">{0} minutes</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SessionCount">{0} sessions</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastPlayed">{0} (dernière session)</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_PlaytimeStatistics">{0} / {1} ({2})</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastYear">L'année dernière</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastMonth">Le mois dernier</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastTwoWeeks">Les deux dernières semaines</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastWeek">La semaine dernière</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_NameAscending">Nom (A-Z)</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_NameDescending">L'année dernière (Z-A)</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_Playtime">Temps de session</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_LastPlayed">Dernière session</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_Sessions">Sessions</sys:String>
+    
+</ResourceDictionary>
