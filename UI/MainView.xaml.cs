@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -44,11 +43,15 @@ namespace RecentActivity.UI
         public string LastMonthText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastMonth");
         public string LastTwoWeeksText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastTwoWeeks");
         public string LastWeekText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_LastWeek");
+        public string YesterdayText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_Yesterday");
+        public string TodayText { get; set; } = ResourceProvider.GetString("LOC_RecentActivity_Today");
 
         public RelayCommand LastYearCommand { get; set; }
         public RelayCommand LastMonthCommand { get; set; }
         public RelayCommand LastTwoWeeksCommand { get; set; }
         public RelayCommand LastWeekCommand { get; set; }
+        public RelayCommand YesterdayCommand { get; set; }
+        public RelayCommand TodayCommand { get; set; }
         public RelayCommand RefreshCommand { get; set; }
         
         public ObservableCollection<SortOption> SortOptions { get; set; } = new ObservableCollection<SortOption>
@@ -136,6 +139,8 @@ namespace RecentActivity.UI
             LastMonthCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddMonths(-1), DateTime.Now));
             LastTwoWeeksCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-14), DateTime.Now));
             LastWeekCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-7), DateTime.Now));
+            YesterdayCommand = new RelayCommand(() => SetDateRange(DateTime.Now.AddDays(-1).Date, DateTime.Now.Date.AddSeconds(-1)));
+            TodayCommand = new RelayCommand(() => SetDateRange(DateTime.Now.Date, DateTime.Now));
             RefreshCommand = new RelayCommand(() => _recentActivitySetup.RefreshData(true) );
         }
 

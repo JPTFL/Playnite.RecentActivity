@@ -14,6 +14,8 @@
     <sys:String x:Key="LOC_RecentActivity_LastMonth">Le mois dernier</sys:String>
     <sys:String x:Key="LOC_RecentActivity_LastTwoWeeks">Les deux dernières semaines</sys:String>
     <sys:String x:Key="LOC_RecentActivity_LastWeek">La semaine dernière</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Yesterday">Hier</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Today">Aujourd'hui</sys:String>
     <sys:String x:Key="LOC_RecentActivity_SortOption_NameAscending">Nom (A-Z)</sys:String>
     <sys:String x:Key="LOC_RecentActivity_SortOption_NameDescending">L'année dernière (Z-A)</sys:String>
     <sys:String x:Key="LOC_RecentActivity_SortOption_Playtime">Temps de session</sys:String>
