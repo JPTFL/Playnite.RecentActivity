@@ -108,7 +108,7 @@
   <ItemGroup>
     <Content Include="demo\Screenshot01.png" />
     <Content Include="demo\Screenshot01_thumb.png" />
-    <Content Include="JonasPTFL_RecentActivity.yaml" />
+    <Content Include="JPTFL_RecentActivity.yaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

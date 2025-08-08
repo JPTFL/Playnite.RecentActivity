@@ -1,7 +1,7 @@
 # Playnite Recent Activity
-![DownloadCountTotal](https://img.shields.io/github/downloads/jonasptfl/playnite.recentactivity/total?label=total%20downloads&style=for-the-badge)
-![LatestVersion](https://img.shields.io/github/v/release/jonasptfl/playnite.recentactivity?label=Latest%20version&style=for-the-badge)
-![DownloadCountLatest](https://img.shields.io/github/downloads/jonasptfl/playnite.recentactivity/latest/total?style=for-the-badge)
+![DownloadCountTotal](https://img.shields.io/github/downloads/jptfl/playnite.recentactivity/total?label=total%20downloads&style=for-the-badge)
+![LatestVersion](https://img.shields.io/github/v/release/jptfl/playnite.recentactivity?label=Latest%20version&style=for-the-badge)
+![DownloadCountLatest](https://img.shields.io/github/downloads/jptfl/playnite.recentactivity/latest/total?style=for-the-badge)
 
 
 Extension for [Playnite](https://playnite.link/).
