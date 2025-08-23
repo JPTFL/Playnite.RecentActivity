@@ -1,0 +1,25 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_RecentActivity_SidebarTitle">最近活动</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_TotalPlaytime">在所选时间范围内游戏时长: {0}</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_StartDate">选择时间：从 </sys:String>
+    <sys:String x:Key="LOC_RecentActivity_EndDate"> 到 </sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Hours">{0} 小时</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Minutes">{0} 分</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SessionCount">{0} 启动次数</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastPlayed">{0} (上次游玩)</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_PlaytimeStatistics">{0} / {1} ({2})</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastYear">过去一年内</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastMonth">过去一月内</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastTwoWeeks">过去两周内</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_LastWeek">上周</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Yesterday">昨天</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_Today">今天</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_NameAscending">字母顺序(A-Z)</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_NameDescending">字母倒序(Z-A)</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_Playtime">游玩时长</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_LastPlayed">上次游玩</sys:String>
+    <sys:String x:Key="LOC_RecentActivity_SortOption_Sessions">启动次数</sys:String>
+    
+</ResourceDictionary>
