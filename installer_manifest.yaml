@@ -1,8 +1,14 @@
 AddonId: JonasPTFL_RecentActivity
 Packages:
+  - Version: 1.0.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-23
+    PackageUrl: https://github.com/JPTFL/Playnite.RecentActivity/releases/download/v1.0.5/JPTFL_RecentActivity_1_0_5.pext
+    Changelog:
+      - adds chinese translation
   - Version: 1.0.4
     RequiredApiVersion: 6.11.0
-    ReleaseDate: 2025-03-27
+    ReleaseDate: 2025-08-09
     PackageUrl: https://github.com/JPTFL/Playnite.RecentActivity/releases/download/v1.0.4/JPTFL_RecentActivity_1_0_4.pext
     Changelog:
       - fix wrong GitHub url
